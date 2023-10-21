@@ -1,0 +1,15 @@
+.display {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+  align-items: end;
+  font-size: 1.5rem;
+  color: black;
+  height: 100vh;
+  padding: 0 3rem;
+}
+.display .array-bar {
+  border-radius: 0.2rem;
+  width: 0.5rem;
+  background-color: lightblue;
+}/*# sourceMappingURL=styles.css.map */

@@ -1,0 +1,17 @@
+
+.display {
+    display: flex;
+    gap: .4rem;
+    justify-content: center;
+    align-items: end;
+    font-size: 1.5rem;
+    color: black;
+    height: 100vh;
+    padding: 0 3rem;
+
+    .array-bar {
+        border-radius: .2rem;
+        width: .5rem;
+        background-color: lightblue;
+    }
+}
