@@ -19,6 +19,11 @@ body {
         border-radius: .2rem;
         width: .5rem;
         background-color: lightblue;
+        transition: all .1s ease;
+    }
+
+    .selected-bar {
+        background-color: lightcoral;
     }
 }
 

@@ -20,6 +20,10 @@ body {
   border-radius: 0.2rem;
   width: 0.5rem;
   background-color: lightblue;
+  transition: all 0.1s ease;
+}
+.display .selected-bar {
+  background-color: lightcoral;
 }
 
 .top-nav {
