@@ -290,72 +290,57 @@ function App(){
         if (start >= end) {return}
 
         const pivotIndex = await partition(array, start, end);
+
+        await new Promise(r => setTimeout(r, (breakLength)));
         
-        await quickSort(array, start, pivotIndex - 1);
-        await quickSort(array, pivotIndex + 1, end);
+        const newArray1 = prevCountRef.current;
+
+        await quickSort(newArray1, start, pivotIndex - 1);
+
+        await new Promise(r => setTimeout(r, (breakLength)));
+
+        const newArray2 = prevCountRef.current;
+
+        await quickSort(newArray2, pivotIndex + 1, end);
 
         async function partition(array, start, end) {
 
-            const value = array[end]
-            let end_idx = end
+            let value = array[end]
+            let idx = start
 
-            for (let i = start; i < end_idx; i++) {
+            barsRef.current[end].classList.add("selected-bar");
 
-                let compare = array[i]
+            for (let i = start; i < end; i++) {
 
-                barsRef.current[end_idx].classList.add("selected-bar");
-                barsRef.current[end_idx - 1].classList.add("third-bar");
+                barsRef.current[idx].classList.add("third-bar");
                 barsRef.current[i].classList.add("second-bar");
                 
                 await new Promise(r => setTimeout(r, (breakLength)));
 
-                while (compare > value) {
+                if (array[i] < value) {
+                    setNumbArray(prevArray => {
+                        [prevArray[idx], prevArray[i]] = [prevArray[i], prevArray[idx]];
+                        idx++
+                        return [...prevArray];
+                    })
 
-                    barsRef.current[end_idx].classList.add("selected-bar");
-                    barsRef.current[end_idx - 1].classList.add("third-bar");
-                    barsRef.current[i].classList.add("second-bar");
-                    
-                    await new Promise(r => setTimeout(r, (breakLength)));
-
-                    if (end_idx === 0) {
-                        break
-                    }
-
-                    if (i !== end_idx - 1) {
-                        setNumbArray(prevArray => {
-                            barsRef.current[end_idx - 1].classList.remove("third-bar");
-                            [prevArray[end_idx], prevArray[end_idx - 1]] = [prevArray[end_idx - 1], prevArray[end_idx]];
-                            end_idx--;
-                            [prevArray[end_idx + 1], prevArray[i]] = [prevArray[i], prevArray[end_idx + 1]];
-                            compare = prevArray[i]
-                            return [...prevArray];
-                        })
-                    }
-                    else {
-                        barsRef.current[end_idx - 1].classList.remove("third-bar");
-                        setNumbArray(prevArray => {
-                            [prevArray[end_idx], prevArray[end_idx - 1]] = [prevArray[end_idx - 1], prevArray[end_idx]];
-                            end_idx--;
-                            return [...prevArray];
-                        })
-                        break;
-                    }
-
-                    
                     clearHighlights()
 
                     await new Promise(r => setTimeout(r, (breakLength)));
                 }
 
-                clearHighlights()
+                barsRef.current[i].classList.remove("second-bar");
 
                 await new Promise(r => setTimeout(r, (breakLength)));
-
             }
-            
-            barsRef.current[end_idx].classList.remove("selected-bar");
 
-            return end_idx;
+
+            setNumbArray(prevArray => {
+                [prevArray[idx], prevArray[end]] = [prevArray[end], prevArray[idx]];
+                return [...prevArray];
+            })
+
+            return idx;
         }
     }
     
