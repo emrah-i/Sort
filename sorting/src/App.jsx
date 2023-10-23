@@ -94,7 +94,7 @@ function Nav(props) {
 
 function SortBtns(props) {
 
-    const { barsRef, generateArray, sortType, bubbleSort, selectionSort, insertionSort } = props;
+    const { barsRef, generateArray, sortType, bubbleSort, selectionSort, insertionSort, quickSort } = props;
     const sortBtns = [useRef(null), useRef(null)]
 
     async function sortItems() {
@@ -107,6 +107,7 @@ function SortBtns(props) {
             if (element) {
                 element.classList.remove("selected-bar")
                 element.classList.remove("second-bar")
+                element.classList.remove("third-bar")
         }})
 
         if (sortType === 'bubble') {
@@ -119,7 +120,7 @@ function SortBtns(props) {
             await insertionSort()
         }
         else if (sortType === 'quick'){
-            await insertionSort()
+            await quickSort()
         }
 
         barsRef.current.forEach(element=>{
@@ -130,6 +131,7 @@ function SortBtns(props) {
         barsRef.current.forEach(element=>{
             if (element) {
                 element.classList.remove("second-bar")
+                element.classList.remove("third-bar")
         }})
 
         sortBtns.forEach(element=>{
@@ -158,6 +160,16 @@ function App(){
     const barsRef = useRef([])
     const prevCountRef = useRef(numbArray);
 
+    function clearHighlights() {
+        barsRef.current.forEach(element => {
+            if (element) {
+                element.classList.remove("selected-bar");
+                element.classList.remove("second-bar");
+                element.classList.remove("third-bar");
+            }
+        });
+    }
+
     async function bubbleSort() {
             
         for (let j = numbArray.length - 1; j >= 1; j--) {
@@ -168,11 +180,7 @@ function App(){
 
                 const newArray = prevCountRef.current;
     
-                barsRef.current.forEach(element=>{
-                    if (element) {
-                        element.classList.remove("selected-bar")
-                        element.classList.remove("second-bar")
-                }})
+                clearHighlights()
     
                 barsRef.current[i].classList.add("selected-bar");
                 if (barsRef.current[i + 1]) {
@@ -243,17 +251,12 @@ function App(){
         for (let j = 1;j < numbArray.length; j++) {
 
             const newArray = prevCountRef.current;
-            const numb = newArray[j]
+            const num = newArray[j]
             let num_idx = j
 
             for (let i = j - 1; i >= 0; i--) {
 
-                barsRef.current.forEach(element => {
-                    if (element) {
-                        element.classList.remove("selected-bar");
-                        element.classList.remove("second-bar");
-                    }
-                });
+                clearHighlights()
 
                 if (i === j - 1) {
                     barsRef.current[num_idx].classList.add("selected-bar");
@@ -266,9 +269,9 @@ function App(){
 
                 await new Promise(r => setTimeout(r, (breakLength)));
 
-                if (numb < newArray[i]) {
+                if (num < newArray[i]) {
                     setNumbArray(prevArray => {
-                        [prevArray[num_idx], prevArray[j]] = [prevArray[j], prevArray[num_idx]];
+                        [prevArray[num_idx], prevArray[i]] = [prevArray[i], prevArray[num_idx]];
                         num_idx--;
                         return [...prevArray];
                     });
@@ -279,6 +282,80 @@ function App(){
             }
 
             await new Promise(r => setTimeout(r, (breakLength)));
+        }
+    }
+
+    async function quickSort(array = numbArray, start = 0, end = numbArray.length - 1) {
+
+        if (start >= end) {return}
+
+        const pivotIndex = await partition(array, start, end);
+        
+        await quickSort(array, start, pivotIndex - 1);
+        await quickSort(array, pivotIndex + 1, end);
+
+        async function partition(array, start, end) {
+
+            const value = array[end]
+            let end_idx = end
+
+            for (let i = start; i < end_idx; i++) {
+
+                let compare = array[i]
+
+                barsRef.current[end_idx].classList.add("selected-bar");
+                barsRef.current[end_idx - 1].classList.add("third-bar");
+                barsRef.current[i].classList.add("second-bar");
+                
+                await new Promise(r => setTimeout(r, (breakLength)));
+
+                while (compare > value) {
+
+                    barsRef.current[end_idx].classList.add("selected-bar");
+                    barsRef.current[end_idx - 1].classList.add("third-bar");
+                    barsRef.current[i].classList.add("second-bar");
+                    
+                    await new Promise(r => setTimeout(r, (breakLength)));
+
+                    if (end_idx === 0) {
+                        break
+                    }
+
+                    if (i !== end_idx - 1) {
+                        setNumbArray(prevArray => {
+                            barsRef.current[end_idx - 1].classList.remove("third-bar");
+                            [prevArray[end_idx], prevArray[end_idx - 1]] = [prevArray[end_idx - 1], prevArray[end_idx]];
+                            end_idx--;
+                            [prevArray[end_idx + 1], prevArray[i]] = [prevArray[i], prevArray[end_idx + 1]];
+                            compare = prevArray[i]
+                            return [...prevArray];
+                        })
+                    }
+                    else {
+                        barsRef.current[end_idx - 1].classList.remove("third-bar");
+                        setNumbArray(prevArray => {
+                            [prevArray[end_idx], prevArray[end_idx - 1]] = [prevArray[end_idx - 1], prevArray[end_idx]];
+                            end_idx--;
+                            return [...prevArray];
+                        })
+                        break;
+                    }
+
+                    
+                    clearHighlights()
+
+                    await new Promise(r => setTimeout(r, (breakLength)));
+                }
+
+                clearHighlights()
+
+                await new Promise(r => setTimeout(r, (breakLength)));
+
+            }
+            
+            barsRef.current[end_idx].classList.remove("selected-bar");
+
+            return end_idx;
         }
     }
     
@@ -309,7 +386,7 @@ function App(){
 
     return (<div>
                 <Nav arrayLength={arrayLength} setArrayLength={setArrayLength} setSortType={setSortType} breakLength={breakLength} setBreakLength={setBreakLength} />
-                <SortBtns barsRef={barsRef} generateArray={generateArray} sortType={sortType} bubbleSort={bubbleSort} selectionSort={selectionSort} insertionSort={insertionSort} />
+                <SortBtns barsRef={barsRef} generateArray={generateArray} sortType={sortType} bubbleSort={bubbleSort} selectionSort={selectionSort} insertionSort={insertionSort} quickSort={quickSort} />
                 <Display numbArray={numbArray} barsRef={barsRef} arrayLength={arrayLength} />
             </div>)
 }
