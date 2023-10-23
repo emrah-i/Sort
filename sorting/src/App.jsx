@@ -1,10 +1,48 @@
 import React, { useEffect, useState, useRef } from "react";
 
 function Display(props) {
-    const { numbArray, barsRef } = props
+    const { numbArray, barsRef, arrayLength } = props
+    const [ barWidth, setBarWidth ] = useState(12)
+    const [ barColor, setBarColor ] = useState("transparent")
+
+    useEffect(()=>{
+        if (arrayLength <= 5) {
+            setBarWidth(12)
+        }
+        else if (arrayLength < 10) {
+            setBarWidth(6)
+        }
+        else if (arrayLength < 20) {
+            setBarWidth(4)
+        }
+        else if (arrayLength < 40) {
+            setBarWidth(2)
+        }
+        else if (arrayLength < 60) {
+            setBarWidth(1)
+        }
+        else if (arrayLength < 80) {
+            setBarWidth(.75)
+        }
+        else if (arrayLength < 100) {
+            setBarWidth(.5)
+        }
+        else {
+            setBarWidth(.4)
+        }
+
+        if (arrayLength < 30) {
+            
+            setBarColor("#343a40")
+        }
+        else {
+            setBarColor("transparent")
+        }
+    }, [arrayLength])
+
 
     return (<div className="display">
-                {numbArray.map((element, index)=>{return (<p key={index} className="array-bar" style={{height: element}} ref={element => barsRef.current[index] = element} data-height={element} >&nbsp;</p>)})}
+                {numbArray.map((element, index)=>{return (<p key={index} className="array-bar" style={{height: element, width: `${barWidth}rem`, color: barColor}} ref={element => barsRef.current[index] = element}>{element}</p>)})}
             </div>)
 }
 
@@ -35,16 +73,20 @@ function Nav(props) {
     }
 
     return (<nav className="top-nav">
-                <label className="slider-label">{arrayLength}</label>
-                <input className="length-slider" type="range" defaultValue={arrayLength} min="2" max="110" onChange={(event)=>changeArray(event)}></input>
+                <div className="length-slider-parent">
+                    <label className="slider-label">{arrayLength}</label>
+                    <input className="length-slider" type="range" defaultValue={arrayLength} min="2" max="110" onChange={(event)=>changeArray(event)}></input>
+                </div>
                 <div className="sort-btns-parent" onClick={(event)=>changeSort(event)} ref={formRef}>
                     <button className="btn selected" data-type="bubble" >Bubble Sort</button>
                     <button className="btn" data-type="selection" >Selection Sort</button>
                     <button className="btn" data-type="insertion" >Insertion Sort</button>
                     <button className="btn" data-type="quick" >Quick Sort</button>
                 </div>
-                <input className="length-slider" type="range" defaultValue={breakLength} min="0" max="10" step=".5" onChange={(event)=>changeBreak(event)}></input>
-                <label className="time-slider-label">{breakLength} s</label>
+                <div className="time-slider-parent">
+                    <input className="length-slider" type="range" defaultValue={breakLength} min="0" max="10" step=".5" onChange={(event)=>changeBreak(event)}></input>
+                    <label className="time-slider-label">{breakLength} s</label>
+                </div>
             </nav>)
 }
 
@@ -253,7 +295,7 @@ function App(){
     return (<div>
                 <Nav arrayLength={arrayLength} setArrayLength={setArrayLength} setSortType={setSortType} breakLength={breakLength} setBreakLength={setBreakLength} />
                 <SortBtns barsRef={barsRef} generateArray={generateArray} sortType={sortType} bubbleSort={bubbleSort} selectionSort={selectionSort} insertionSort={insertionSort} />
-                <Display numbArray={numbArray} barsRef={barsRef} />
+                <Display numbArray={numbArray} barsRef={barsRef} arrayLength={arrayLength} />
             </div>)
 }
 
