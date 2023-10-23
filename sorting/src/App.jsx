@@ -74,8 +74,9 @@ function Nav(props) {
 
     return (<nav className="top-nav">
                 <div className="length-slider-parent">
-                    <label className="slider-label">{arrayLength}</label>
+                    <label className="slider-label">Bars:</label>
                     <input className="length-slider" type="range" defaultValue={arrayLength} min="2" max="110" onChange={(event)=>changeArray(event)}></input>
+                    <label className="slider-label">{arrayLength}</label>
                 </div>
                 <div className="sort-btns-parent" onClick={(event)=>changeSort(event)} ref={formRef}>
                     <button className="btn selected" data-type="bubble" >Bubble Sort</button>
@@ -84,8 +85,9 @@ function Nav(props) {
                     <button className="btn" data-type="quick" >Quick Sort</button>
                 </div>
                 <div className="time-slider-parent">
-                    <input className="length-slider" type="range" defaultValue={breakLength} min="0" max="10" step=".5" onChange={(event)=>changeBreak(event)}></input>
-                    <label className="time-slider-label">{breakLength} s</label>
+                    <label className="time-input-label" >Delay:</label>
+                    <input className="time-input" type="number" defaultValue={breakLength} min="0" onChange={(event)=>changeBreak(event)}></input>
+                    <label className="time-input-label">ms</label>
                 </div>
             </nav>)
 }
@@ -101,6 +103,12 @@ function SortBtns(props) {
             element.current.disabled = true;
         })
 
+        barsRef.current.forEach(element=>{
+            if (element) {
+                element.classList.remove("selected-bar")
+                element.classList.remove("second-bar")
+        }})
+
         if (sortType === 'bubble') {
             await bubbleSort()
         }
@@ -108,6 +116,9 @@ function SortBtns(props) {
             await selectionSort()
         }
         else if (sortType === 'insertion'){
+            await insertionSort()
+        }
+        else if (sortType === 'quick'){
             await insertionSort()
         }
 
@@ -142,18 +153,20 @@ function App(){
     const [ numbArray, setNumbArray ] = useState([])
     const [ sortType, setSortType ] = useState("bubble")
     const [ arrayLength, setArrayLength ] = useState(25)
-    const [ breakLength, setBreakLength ] = useState(1)
+    const [ breakLength, setBreakLength ] = useState(50)
+    const [ comparisons, setComparisons ] = useState(0)
     const barsRef = useRef([])
     const prevCountRef = useRef(numbArray);
 
     async function bubbleSort() {
-        let sorting = true;
             
-        while (sorting) {
+        for (let j = numbArray.length - 1; j >= 1; j--) {
     
-            sorting = false;
+            let swapped = false
     
-            for (let i = 0; i < numbArray.length - 1; i++) {
+            for (let i = 0; i < j; i++) {
+
+                const newArray = prevCountRef.current;
     
                 barsRef.current.forEach(element=>{
                     if (element) {
@@ -166,16 +179,21 @@ function App(){
                     barsRef.current[i + 1].classList.add("second-bar");
                 }
     
-                await new Promise(r => setTimeout(r, (breakLength * 100)));
+                await new Promise(r => setTimeout(r, (breakLength)));
     
-                setNumbArray(prevArray => {
-                    const newArray = [...prevArray];
-                        if (i !== newArray.length - 1 && newArray[i] > newArray[i + 1]) {
-                            [newArray[i], newArray[i + 1]] = [newArray[i + 1], newArray[i]];
-                            sorting = true
-                        }
-                    return newArray;
-                });
+                if (i !== newArray.length - 1 && newArray[i] > newArray[i + 1]) {
+                    swapped = true
+                    setNumbArray(prevArray => {
+                        [prevArray[i], prevArray[i + 1]] = [prevArray[i + 1], prevArray[i]];
+                        return [...prevArray];
+                    })
+                }
+
+                await new Promise(r => setTimeout(r, (breakLength)));
+            }
+
+            if (swapped === false) {
+                break
             }
         }
     }
@@ -199,7 +217,7 @@ function App(){
 
                 barsRef.current[i].classList.add("second-bar");
 
-                await new Promise(r => setTimeout(r, (breakLength * 100)));
+                await new Promise(r => setTimeout(r, (breakLength)));
     
                 if (newArray[i] < min) {
                     min = newArray[i];
@@ -210,14 +228,13 @@ function App(){
             }
                 
             setNumbArray(prevArray => {
-                const temp = prevArray[min_idx];
-                prevArray[min_idx] = prevArray[j];
-                prevArray[j] = temp;
+                [prevArray[min_idx], prevArray[j]] = [prevArray[j], prevArray[min_idx]];
                 return [...prevArray];
             });
 
             barsRef.current[j].classList.remove("selected-bar");
-            await new Promise(r => setTimeout(r, (breakLength * 100)));
+
+            await new Promise(r => setTimeout(r, (breakLength)));
         }
     }
 
@@ -247,13 +264,11 @@ function App(){
                 
                 barsRef.current[i].classList.add("second-bar");
 
-                await new Promise(r => setTimeout(r, (breakLength * 100)));
+                await new Promise(r => setTimeout(r, (breakLength)));
 
                 if (numb < newArray[i]) {
                     setNumbArray(prevArray => {
-                        const temp = prevArray[num_idx];
-                        prevArray[num_idx] = prevArray[i];
-                        prevArray[i] = temp;
+                        [prevArray[num_idx], prevArray[j]] = [prevArray[j], prevArray[num_idx]];
                         num_idx--;
                         return [...prevArray];
                     });
@@ -263,7 +278,7 @@ function App(){
                 }
             }
 
-            await new Promise(r => setTimeout(r, (breakLength * 100)));
+            await new Promise(r => setTimeout(r, (breakLength)));
         }
     }
     
@@ -299,4 +314,4 @@ function App(){
             </div>)
 }
 
-export default App
+export default App;

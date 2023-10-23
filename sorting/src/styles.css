@@ -68,14 +68,23 @@ body {
   border: none;
   width: 15rem;
 }
-.top-nav .slider-label, .top-nav .time-slider-label {
+.top-nav .slider-label {
   font-size: 1.15rem;
-  margin-right: 0.2rem;
+  padding: 0.5rem;
   color: white;
 }
-.top-nav .time-slider-label {
-  padding-left: 0.5rem;
+.top-nav .time-input {
+  width: 5rem;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.9333333333);
+}
+.top-nav .time-input-label {
+  font-size: 1.15rem;
+  padding: 0.5rem;
   min-width: 4rem;
+  color: rgba(255, 255, 255, 0.9333333333);
 }
 
 .btn {
