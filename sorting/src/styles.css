@@ -25,6 +25,9 @@ body {
 .display .selected-bar {
   background-color: lightcoral;
 }
+.display .second-bar {
+  background-color: green;
+}
 
 .top-nav {
   display: flex;

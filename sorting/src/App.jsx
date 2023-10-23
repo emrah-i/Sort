@@ -34,16 +34,14 @@ function Nav(props) {
         }
     }
 
-
-
     return (<nav className="top-nav">
                 <label className="slider-label">{arrayLength}</label>
                 <input className="length-slider" type="range" defaultValue={arrayLength} min="2" max="110" onChange={(event)=>changeArray(event)}></input>
                 <div className="sort-btns-parent" onClick={(event)=>changeSort(event)} ref={formRef}>
                     <button className="btn selected" data-type="bubble" >Bubble Sort</button>
                     <button className="btn" data-type="selection" >Selection Sort</button>
-                    <button className="btn" data-type="quick" >Quick Sort</button>
                     <button className="btn" data-type="insertion" >Insertion Sort</button>
+                    <button className="btn" data-type="quick" >Quick Sort</button>
                 </div>
                 <input className="length-slider" type="range" defaultValue={breakLength} min="0" max="10" step=".5" onChange={(event)=>changeBreak(event)}></input>
                 <label className="time-slider-label">{breakLength} s</label>
@@ -52,7 +50,7 @@ function Nav(props) {
 
 function SortBtns(props) {
 
-    const { barsRef, generateArray, sortType, bubbleSort, selectionSort } = props;
+    const { barsRef, generateArray, sortType, bubbleSort, selectionSort, insertionSort } = props;
     const sortBtns = [useRef(null), useRef(null)]
 
     async function sortItems() {
@@ -67,10 +65,18 @@ function SortBtns(props) {
         else if (sortType === 'selection'){
             await selectionSort()
         }
+        else if (sortType === 'insertion'){
+            await insertionSort()
+        }
 
         barsRef.current.forEach(element=>{
             if (element) {
                 element.classList.add("selected-bar")
+        }})
+
+        barsRef.current.forEach(element=>{
+            if (element) {
+                element.classList.remove("second-bar")
         }})
 
         sortBtns.forEach(element=>{
@@ -110,11 +116,12 @@ function App(){
                 barsRef.current.forEach(element=>{
                     if (element) {
                         element.classList.remove("selected-bar")
+                        element.classList.remove("second-bar")
                 }})
     
                 barsRef.current[i].classList.add("selected-bar");
                 if (barsRef.current[i + 1]) {
-                    barsRef.current[i + 1].classList.add("selected-bar");
+                    barsRef.current[i + 1].classList.add("second-bar");
                 }
     
                 await new Promise(r => setTimeout(r, (breakLength * 100)));
@@ -138,16 +145,17 @@ function App(){
             const newArray = prevCountRef.current;
             let min_idx = j;
             let min = newArray[j];
+            barsRef.current[j].classList.add("selected-bar");
         
             for (let i = j + 1; i < numbArray.length; i++) {
 
                 barsRef.current.forEach(element => {
                     if (element) {
-                        element.classList.remove("selected-bar");
+                        element.classList.remove("second-bar");
                     }
                 });
 
-                barsRef.current[i].classList.add("selected-bar");
+                barsRef.current[i].classList.add("second-bar");
 
                 await new Promise(r => setTimeout(r, (breakLength * 100)));
     
@@ -156,7 +164,7 @@ function App(){
                     min_idx = i;
                 }
     
-                barsRef.current[i].classList.remove("selected-bar");
+                barsRef.current[i].classList.add("second-bar");
             }
                 
             setNumbArray(prevArray => {
@@ -166,11 +174,57 @@ function App(){
                 return [...prevArray];
             });
 
+            barsRef.current[j].classList.remove("selected-bar");
+            await new Promise(r => setTimeout(r, (breakLength * 100)));
+        }
+    }
+
+    async function insertionSort() {
+
+        for (let j = 1;j < numbArray.length; j++) {
+
+            const newArray = prevCountRef.current;
+            const numb = newArray[j]
+            let num_idx = j
+
+            for (let i = j - 1; i >= 0; i--) {
+
+                barsRef.current.forEach(element => {
+                    if (element) {
+                        element.classList.remove("selected-bar");
+                        element.classList.remove("second-bar");
+                    }
+                });
+
+                if (i === j - 1) {
+                    barsRef.current[num_idx].classList.add("selected-bar");
+                }
+                else {
+                    barsRef.current[num_idx - 1].classList.add("selected-bar");
+                }
+                
+                barsRef.current[i].classList.add("second-bar");
+
+                await new Promise(r => setTimeout(r, (breakLength * 100)));
+
+                if (numb < newArray[i]) {
+                    setNumbArray(prevArray => {
+                        const temp = prevArray[num_idx];
+                        prevArray[num_idx] = prevArray[i];
+                        prevArray[i] = temp;
+                        num_idx--;
+                        return [...prevArray];
+                    });
+                }
+                else {
+                    break
+                }
+            }
+
             await new Promise(r => setTimeout(r, (breakLength * 100)));
         }
     }
     
-
     function generateArray() {
         const array = []
             
@@ -198,7 +252,7 @@ function App(){
 
     return (<div>
                 <Nav arrayLength={arrayLength} setArrayLength={setArrayLength} setSortType={setSortType} breakLength={breakLength} setBreakLength={setBreakLength} />
-                <SortBtns barsRef={barsRef} generateArray={generateArray} sortType={sortType} bubbleSort={bubbleSort} selectionSort={selectionSort} />
+                <SortBtns barsRef={barsRef} generateArray={generateArray} sortType={sortType} bubbleSort={bubbleSort} selectionSort={selectionSort} insertionSort={insertionSort} />
                 <Display numbArray={numbArray} barsRef={barsRef} />
             </div>)
 }
