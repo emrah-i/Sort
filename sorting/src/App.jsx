@@ -7,6 +7,7 @@ import bubbleSort from "./components/bubble-sort";
 import selectionSort from "./components/selection-sort";
 import insertionSort from "./components/insertion-sort";
 import quickSort from "./components/quick-sort";
+import Information from "./components/information";
 
 function App(){
 
@@ -73,6 +74,9 @@ function App(){
                 <Nav arrayLength={arrayLength} setArrayLength={setArrayLength} setSortType={setSortType} breakLength={breakLength} setBreakLength={setBreakLength} working={working} />
                 <SortBtns barsRef={barsRef} generateArray={generateArray} sortType={sortType} mainSort={mainSort} working={working} setWorking={setWorking} clearHighlights={clearHighlights} stop={stop} />
                 <Display numbArray={numbArray} barsRef={barsRef} arrayLength={arrayLength} />
+                <hr/>
+                <Information sortType={sortType} />
+                <hr/>
                 <Disclaimer />
             </div>)
 }

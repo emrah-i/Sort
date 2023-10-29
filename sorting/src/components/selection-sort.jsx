@@ -11,7 +11,7 @@ async function selectionSort(sortVariables) {
         stop
     } = sortVariables;
         
-    for (let j = 0; j < numbArray.length; j++) {
+    for (let j = 0; j < numbArray.length - 1; j++) {
 
         const newArray = prevCountRef.current;
         let min_idx = j;
