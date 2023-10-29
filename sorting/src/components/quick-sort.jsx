@@ -1,7 +1,23 @@
 
-function useQuickSort() {
-        
-    async function quickSort(array = numbArray, start = 0, end = numbArray.length - 1) {
+async function quickSort(sortVariables) {
+    
+    const { 
+        barsRef, 
+        clearHighlights, 
+        prevCountRef, 
+        numbArray, 
+        setNumbArray, 
+        breakLength,
+        stop
+    } = sortVariables;
+
+    await sort()
+
+    async function sort(array = numbArray, start = 0, end = numbArray.length - 1) {
+
+        if (stop.current) {
+            return;
+        }
     
         if (start >= end) {return}
     
@@ -9,15 +25,15 @@ function useQuickSort() {
     
         await new Promise(r => setTimeout(r, (breakLength)));
         
-        const newArray1 = prevCountRef.current;
+        const newArray_1 = prevCountRef.current;
     
-        await quickSort(newArray1, start, pivotIndex - 1);
+        await sort(newArray_1, start, pivotIndex - 1);
     
         await new Promise(r => setTimeout(r, (breakLength)));
     
-        const newArray2 = prevCountRef.current;
+        const newArray_2 = prevCountRef.current;
     
-        await quickSort(newArray2, pivotIndex + 1, end);
+        await sort(newArray_2, pivotIndex + 1, end);
     
         async function partition(array, start, end) {
     
@@ -50,6 +66,10 @@ function useQuickSort() {
                 }
     
                 await new Promise(r => setTimeout(r, (breakLength)));
+
+                if (stop.current) {
+                    return;
+                }
             }
     
     
@@ -63,4 +83,4 @@ function useQuickSort() {
     }
 }
 
-export default useQuickSort;
+export default quickSort;

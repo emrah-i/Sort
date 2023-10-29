@@ -3,7 +3,10 @@ import Nav from "./components/nav";
 import SortBtns from "./components/sort-btns";
 import Display from "./components/display";
 import Disclaimer from "./components/disclaimer";
-
+import bubbleSort from "./components/bubble-sort";
+import selectionSort from "./components/selection-sort";
+import insertionSort from "./components/insertion-sort";
+import quickSort from "./components/quick-sort";
 
 function App(){
 
@@ -12,6 +15,7 @@ function App(){
     const [ arrayLength, setArrayLength ] = useState(25)
     const [ breakLength, setBreakLength ] = useState(50)
     const [ working, setWorking ] = useState(false)
+    const stop = useRef(false);
     const barsRef = useRef([])
     const prevCountRef = useRef(numbArray);
 
@@ -30,19 +34,29 @@ function App(){
         barsRef.current = [];
     };
 
-    const mainSort = async (method) => {
+    const sortVariables = {
+        "barsRef": barsRef,
+        "clearHighlights": clearHighlights,
+        "prevCountRef": prevCountRef,
+        "numbArray": numbArray,
+        "setNumbArray": setNumbArray,
+        "breakLength": breakLength,
+        "stop": stop
+    }
+
+    async function mainSort(method) {
         switch (method) {
             case 'bubble':
-                await bubbleSort(numbArray, barsRef, breakLength);
+                await bubbleSort(sortVariables);
                 break;
             case 'selection':
-                await selectionSort(numbArray, barsRef, breakLength);
+                await selectionSort(sortVariables);
                 break;
             case 'insertion':
-                await insertionSort(numbArray, barsRef, breakLength);
+                await insertionSort(sortVariables);
                 break;
             case 'quick':
-                await quickSort(numbArray, barsRef, breakLength);
+                await quickSort(sortVariables);
                 break;
         }
     };
@@ -57,7 +71,7 @@ function App(){
 
     return (<div>
                 <Nav arrayLength={arrayLength} setArrayLength={setArrayLength} setSortType={setSortType} breakLength={breakLength} setBreakLength={setBreakLength} working={working} />
-                <SortBtns barsRef={barsRef} generateArray={generateArray} sortType={sortType} mainSort={mainSort} setWorking={setWorking} />
+                <SortBtns barsRef={barsRef} generateArray={generateArray} sortType={sortType} mainSort={mainSort} working={working} setWorking={setWorking} clearHighlights={clearHighlights} stop={stop} />
                 <Display numbArray={numbArray} barsRef={barsRef} arrayLength={arrayLength} />
                 <Disclaimer />
             </div>)

@@ -115,7 +115,7 @@ body {
 .sort-btns {
   display: flex;
   justify-content: center;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 .sort-btns .btn {
   font-size: 1.35rem;
