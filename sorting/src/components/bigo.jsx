@@ -61,7 +61,20 @@ function BigO(props) {
             <p>In quick sort, there is no concrete way to start. My algorithm uses the last index, however, this is not efficient 
                 as the starting pivot index should be close to the median of the array. I will only explain how my algorithm works. 
                 This will be a little more complicated than the other algorithms as it contains recursion.</p>
-            <p></p>
+            <p>For my quick sort, you start at the last index, called the pivot index. A comparison index starts at the index 0.
+                This comparison index increments by 1 until it finds a value greater than the pivot value. 
+                Once this value is found, a loop starts at this index and increments by 1 until it finds
+                a value lesser than the pivot. We will call this loop index the swap index. 
+                When this lesser value is found, the swap index and comparison index swap. 
+                The comparison index increments by 1 and the swap index continues from the previous swap index where the swap took place. 
+                Once the swap index reaches the pivot index, the comparison index is swapped with the pivot index. 
+                This might not make sense, but remember, we were always comparing the swap index to the pivot index, never the comparison index.
+                Therefore, this array is sorted according the pivot.</p>
+            <p>Following this is where recursion is utilized. After the final swap, we have a new pivot index. 
+                Now, we sort everything to the left and everything to the right of the pivot (seperately) using the same method described above.
+                The only thing that changes is the start and end points of the array. 
+                We do this by changing the start and end parameters on the function call.
+            </p>
             <p><b>Best-case:</b> O(n • logn) –– with a good pivot selection.</p>
             <p><b>Average-case:</b> O(n • logn)</p>
             <p><b>Worst-case:</b> O(n<sup>2</sup>) –– when the pivot is always the smallest or largest element.</p>
