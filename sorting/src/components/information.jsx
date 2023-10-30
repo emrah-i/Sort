@@ -7,6 +7,9 @@ function Information(props) {
     return (<div className="information">
                 <div>
                     <h2>Definitions</h2>
+                    <p><i className="fa-solid fa-square base-color"></i> Base Index</p>
+                    <p><i className="fa-solid fa-square comp-color"></i> Comparison Index</p>
+                    <p><i className="fa-solid fa-square swap-color"></i> Swap Index (only quick sort)</p>
                     <p><b>Worst Case:</b> &nbsp;The time complexity when the input is in the least favorable condition for the algorithm.</p>
                     <p><b>Best Case:</b> &nbsp;The time complexity when the input is in the most favorable condition for the algorithm.</p>
                     <p><b>Average Case:</b>  &nbsp;Takes into account all possible input configurations and their likelihood.</p>

@@ -46,8 +46,8 @@ async function quickSort(sortVariables) {
     
             for (let i = start; i < end; i++) {
     
-                barsRef.current[idx].classList.add("third-bar");
-                barsRef.current[i].classList.add("second-bar");
+                barsRef.current[idx].classList.add("second-bar");
+                barsRef.current[i].classList.add("third-bar");
                 
                 await new Promise(r => setTimeout(r, (breakLength)));
     
@@ -58,11 +58,11 @@ async function quickSort(sortVariables) {
                         return [...prevArray];
                     })
     
-                    barsRef.current[idx].classList.remove("third-bar");
-                    barsRef.current[i].classList.remove("second-bar");
+                    barsRef.current[idx].classList.remove("second-bar");
+                    barsRef.current[i].classList.remove("third-bar");
                 }
                 else {
-                    barsRef.current[i].classList.remove("second-bar");
+                    barsRef.current[i].classList.remove("third-bar");
                 }
     
                 await new Promise(r => setTimeout(r, (breakLength)));

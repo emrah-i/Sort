@@ -169,6 +169,18 @@ hr {
   border-radius: 0.5rem;
 }
 
+.base-color {
+  color: lightcoral;
+}
+
+.comp-color {
+  color: rgb(37, 166, 37);
+}
+
+.swap-color {
+  color: orchid;
+}
+
 .disclaimer {
   font-size: 1.15rem;
   width: 85vw;
