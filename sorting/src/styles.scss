@@ -11,7 +11,7 @@ body {
     font-size: 1.5rem;
     color: black;
     height: fit-content;
-    height: 75vh;
+    height: 65vh;
     width: 85vw;
     margin: 0 auto;
     padding: auto 3rem;
@@ -216,4 +216,35 @@ hr {
     font-size: 1.15rem;
     width: 85vw;
     margin: 0 auto 4rem;
+}
+
+@media (max-width: 1400px) {
+    .top-nav {
+        flex-direction: column;
+        height: fit-content;
+        top: -30.5rem;
+        gap: 2rem;
+        transition: top .5s ease;
+
+        .sort-btns-parent {
+            flex-direction: column;
+        }
+
+        .nav-chevron {
+            font-size: 1rem;
+            padding: 0;
+    
+            i {
+                transition: all .3s ease ;
+            }
+        }
+    
+        .active {
+            transform: rotate(180deg);
+        }
+    }
+
+    .expanded {
+        top: 0;
+    }
 }

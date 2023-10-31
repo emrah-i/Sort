@@ -1,10 +1,13 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function Nav(props) {
     const { arrayLength, setArrayLength, setSortType, breakLength, setBreakLength, working } = props
+    const [ navExpand, setNavExpand ] = useState(null)
     const formRef = useRef(null) 
     const formSliders = [useRef(null), useRef(null)]
     const sliderMax = useRef(null)
+    const navBar = useRef(null)
+    const navExRef = useRef(null)
 
     function changeArray(event) {
         setArrayLength(event.target.value)
@@ -26,6 +29,11 @@ function Nav(props) {
             event.target.classList.add('selected')
             setSortType(event.target.dataset.type)
         }
+    }
+
+    function expandToolbar() {
+        navBar.current.classList.toggle("expanded")
+        navExRef.current.classList.toggle("active")
     }
 
     useEffect(()=>{
@@ -61,9 +69,16 @@ function Nav(props) {
             sliderMax.current = 40
         }
 
+        if (width < 1400) {
+            setNavExpand(<button className="btn nav-chevron"><i class="fa-solid fa-chevron-down" onClick={expandToolbar} ref={navExRef}></i></button>)
+        }
+        else {
+            setNavExpand(null)
+        }
+
     }, [window.innerWidth, window.screen.width])
 
-    return (<nav className="top-nav">
+    return (<nav class="top-nav" ref={navBar}>
                 <div className="length-slider-parent">
                     <label className="slider-label">Bars:</label>
                     <input className="length-slider" type="range" defaultValue={arrayLength} min="4" max={sliderMax.current} onChange={(event)=>changeArray(event)} ref={formSliders[0]}></input>
@@ -81,6 +96,7 @@ function Nav(props) {
                     <input className="time-input" type="number" defaultValue={breakLength} min="0" onChange={(event)=>changeBreak(event)}  ref={formSliders[1]}></input>
                     <label className="time-ms-label">ms</label>
                 </div>
+                {navExpand}
             </nav>)
 }
 

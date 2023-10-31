@@ -11,7 +11,7 @@ body {
   color: black;
   height: -moz-fit-content;
   height: fit-content;
-  height: 75vh;
+  height: 65vh;
   width: 85vw;
   margin: 0 auto;
   padding: auto 3rem;
@@ -193,4 +193,31 @@ hr {
   font-size: 1.15rem;
   width: 85vw;
   margin: 0 auto 4rem;
+}
+
+@media (max-width: 1400px) {
+  .top-nav {
+    flex-direction: column;
+    height: -moz-fit-content;
+    height: fit-content;
+    top: -30.5rem;
+    gap: 2rem;
+    transition: top 0.5s ease;
+  }
+  .top-nav .sort-btns-parent {
+    flex-direction: column;
+  }
+  .top-nav .nav-chevron {
+    font-size: 1rem;
+    padding: 0;
+  }
+  .top-nav .nav-chevron i {
+    transition: all 0.3s ease;
+  }
+  .top-nav .active {
+    transform: rotate(180deg);
+  }
+  .expanded {
+    top: 0;
+  }
 }/*# sourceMappingURL=styles.css.map */
