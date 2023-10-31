@@ -4,6 +4,7 @@ function Nav(props) {
     const { arrayLength, setArrayLength, setSortType, breakLength, setBreakLength, working } = props
     const formRef = useRef(null) 
     const formSliders = [useRef(null), useRef(null)]
+    const sliderMax = useRef(null)
 
     function changeArray(event) {
         setArrayLength(event.target.value)
@@ -36,10 +37,36 @@ function Nav(props) {
         })
     }, [working])
 
+    useEffect(()=>{
+
+        setArrayLength(25)
+        formSliders[0].current.value = 25
+
+        const width = window.innerWidth
+        const sec_width = window.screen.width
+
+        if (width >= 1200 || sec_width >= 1200) {
+            sliderMax.current = 115
+        }
+        else if (width >= 992 || sec_width >= 992) {
+            sliderMax.current = 100
+        }
+        else if (width >= 768 || sec_width >= 768) {
+            sliderMax.current = 80
+        }
+        else if (width >= 576 || sec_width >= 576) {
+            sliderMax.current = 60
+        }
+        else {
+            sliderMax.current = 40
+        }
+
+    }, [window.innerWidth, window.screen.width])
+
     return (<nav className="top-nav">
                 <div className="length-slider-parent">
                     <label className="slider-label">Bars:</label>
-                    <input className="length-slider" type="range" defaultValue={arrayLength} min="4" max="110" onChange={(event)=>changeArray(event)} ref={formSliders[0]}></input>
+                    <input className="length-slider" type="range" defaultValue={arrayLength} min="4" max={sliderMax.current} onChange={(event)=>changeArray(event)} ref={formSliders[0]}></input>
                     <label className="slider-label">{arrayLength}</label>
                 </div>
                 <div className="sort-btns-parent" onClick={(event)=>changeSort(event)} ref={formRef}>

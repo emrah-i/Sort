@@ -1,8 +1,8 @@
 
 function Definitions() {
     
-    return (<div>
-                <h2>Definitions</h2>
+    return (<div className="col ps-xl-4 ps-0 mt-xl-0 mt-5">
+                <h2><b>Definitions:</b></h2>
                 <p><b>Worst Case:</b> &nbsp;The time complexity when the input is in the least favorable condition for the algorithm.</p>
                 <p><b>Best Case:</b> &nbsp;The time complexity when the input is in the most favorable condition for the algorithm.</p>
                 <p><b>Average Case:</b>  &nbsp;Takes into account all possible input configurations and their likelihood.</p>

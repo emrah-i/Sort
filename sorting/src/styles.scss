@@ -5,8 +5,8 @@ body {
 
 .display {
     display: flex;
-    gap: .4rem;
-    justify-content: center;
+    gap: .25rem;
+    justify-content: space-between;
     align-items: end;
     font-size: 1.5rem;
     color: black;
@@ -21,10 +21,10 @@ body {
         justify-content: center;
         align-items: center;
         margin-top: auto;
-        flex-grow: 1;
         margin-bottom: 0;
-        border-radius: .2rem;
         font-size: 1.25rem;
+        flex-grow: 1;
+        border-radius: .5rem;
         background-color: lightblue;
         transition: all .25s ease;
     }
@@ -68,6 +68,10 @@ body {
         align-items: center;
     }
 
+    .btn {
+        color: #FFFFFFEE;
+    }
+
     .selected {
         color: #343a40;
         background-color: #FFFFFFEE;
@@ -106,7 +110,6 @@ body {
         font-size: 1.15rem;
         color: #FFFFFFEE;
     }
-
 }
 
 .btn {
@@ -123,6 +126,10 @@ body {
 
 .btn:hover {
     border-radius: .75rem;
+}
+
+.btn:disabled {
+    opacity: 90%;
 }
 
 .sort-btns {
@@ -147,17 +154,22 @@ body {
 }
 
 .information {
-    display: flex;
-    justify-content: center;
     font-size: 1.15rem;
-    width: 85vw;
-    gap: 5rem;
-    margin: 0 auto;
-    padding: 0;
     line-height: 1.5rem;
 
-    div {
-        width: 50%;
+    .row {
+        display: flex;
+        justify-content: space-between;
+        width: 85vw;
+        margin: 0 auto;
+
+        .col {
+            padding: 0;
+        }
+
+        .col:nth-child(2) {
+            padding-left: 2rem;
+        }
 
         h2 {
             margin-top: 0;
@@ -165,10 +177,6 @@ body {
 
         p:last-child {
             margin-bottom: 0;
-        }
-
-        > * {
-            width: 100%;
         }
 
         ul {
@@ -186,7 +194,8 @@ hr {
     height: 0;
     color: transparent;
     width: 85vw;
-    border: .1rem solid black;
+    border: .1rem solid #343a40;
+    opacity: 100%;
     margin: 2rem auto;
     border-radius: .5rem;
 }

@@ -7,7 +7,7 @@ function BigO(props) {
       case 'bubble':
         content = (
           <div>
-            <h2>Bubble Sort:</h2>
+            <h2><b>Bubble Sort:</b></h2>
             <p><i className="fa-solid fa-square base-color"></i> Base Index</p>
             <p><i className="fa-solid fa-square comp-color"></i> Comparison Index</p>
             <p>
@@ -37,7 +37,7 @@ function BigO(props) {
       case 'selection':
         content = (
           <div>
-            <h2>Selection Sort:</h2>
+            <h2><b>Selection Sort:</b></h2>
             <p><i className="fa-solid fa-square base-color"></i> Base Index</p>
             <p><i className="fa-solid fa-square comp-color"></i> Comparison Index</p>
             <p>
@@ -67,7 +67,7 @@ function BigO(props) {
       case 'insertion':
         content = (
           <div>
-            <h2>Insertion Sort:</h2>
+            <h2><b>Insertion Sort:</b></h2>
             <p><i className="fa-solid fa-square base-color"></i> Base Index</p>
             <p><i className="fa-solid fa-square comp-color"></i> Comparison Index</p>
             <p>
@@ -99,7 +99,7 @@ function BigO(props) {
       case 'quick':
         content = (
           <div>
-            <h2>Quick Sort:</h2>
+            <h2><b>Quick Sort:</b></h2>
             <p><i className="fa-solid fa-square base-color"></i> Base Index</p>
             <p><i className="fa-solid fa-square comp-color"></i> Comparison Index</p>
             <p><i className="fa-solid fa-square swap-color"></i> Swap Index</p>
@@ -133,7 +133,7 @@ function BigO(props) {
       case 'merge':
         content = (
           <div>
-            <h2>Merge Sort:</h2>
+            <h2><b>Merge Sort:</b></h2>
             <p><i className="fa-solid fa-square base-color"></i> End Index</p>
             <p><i className="fa-solid fa-square comp-color"></i> Start Index</p>
             <p><i className="fa-solid fa-square swap-color"></i> Middle Index</p>
@@ -165,7 +165,9 @@ function BigO(props) {
         content = <p>Please select a sorting method.</p>;
     }
   
-    return <div>{content}</div>;
+    return <div className="col">
+            {content}
+           </div>;
 }
 
 export default BigO;
