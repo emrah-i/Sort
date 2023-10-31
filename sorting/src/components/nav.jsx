@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 function Nav(props) {
-    const { arrayLength, setArrayLength, setSortType, breakLength, setBreakLength, working } = props
+    const { arrayLength, setArrayLength, setSortType, breakLength, setBreakLength, working, screenSize, handleResize } = props
     const [ navExpand, setNavExpand ] = useState(null)
     const formRef = useRef(null) 
     const formSliders = [useRef(null), useRef(null)]
@@ -47,38 +47,50 @@ function Nav(props) {
 
     useEffect(()=>{
 
+        window.addEventListener('resize', handleResize);
+            
+        return () => {
+            window.removeEventListener('resize', handleResize);
+          }
+  
+    }, [])
+
+    useEffect(()=>{
+
         setArrayLength(25)
         formSliders[0].current.value = 25
 
-        const width = window.innerWidth
-        const sec_width = window.screen.width
+        const width = screenSize['width']
 
-        if (width >= 1200 || sec_width >= 1200) {
+        if (width >= 1200) {
             sliderMax.current = 115
         }
-        else if (width >= 992 || sec_width >= 992) {
+        else if (width >= 992) {
             sliderMax.current = 100
         }
-        else if (width >= 768 || sec_width >= 768) {
+        else if (width >= 768) {
             sliderMax.current = 80
         }
-        else if (width >= 576 || sec_width >= 576) {
+        else if (width >= 576) {
             sliderMax.current = 60
         }
-        else {
+        else if (width >= 400) {
             sliderMax.current = 40
+        }
+        else {
+            sliderMax.current = 35
         }
 
         if (width < 1400) {
-            setNavExpand(<button className="btn nav-chevron"><i class="fa-solid fa-chevron-down" onClick={expandToolbar} ref={navExRef}></i></button>)
+            setNavExpand(<button className="btn nav-chevron"><i className="fa-solid fa-chevron-down" onClick={expandToolbar} ref={navExRef}></i></button>)
         }
         else {
             setNavExpand(null)
         }
 
-    }, [window.innerWidth, window.screen.width])
+    }, [screenSize])
 
-    return (<nav class="top-nav" ref={navBar}>
+    return (<nav className="top-nav" ref={navBar}>
                 <div className="length-slider-parent">
                     <label className="slider-label">Bars:</label>
                     <input className="length-slider" type="range" defaultValue={arrayLength} min="4" max={sliderMax.current} onChange={(event)=>changeArray(event)} ref={formSliders[0]}></input>

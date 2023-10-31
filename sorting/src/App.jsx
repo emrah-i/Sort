@@ -17,6 +17,7 @@ function App(){
     const [ arrayLength, setArrayLength ] = useState(25)
     const [ breakLength, setBreakLength ] = useState(50)
     const [ working, setWorking ] = useState(false)
+    const [ screenSize, setScreenSize ] = useState({width: window.innerWidth, height: window.innerHeight})
     const stop = useRef(false);
     const barsRef = useRef([]);
     const barsHeight = useRef(null);
@@ -39,18 +40,9 @@ function App(){
 
     function handleResize() {
 
-        const height = window.innerHeight
-        const sec_height = window.screen.height
+        setScreenSize({width: window.innerWidth, height: window.innerHeight})
 
-        if (height >= 768 || sec_height >= 768) {
-            barsHeight.current = 501
-        }
-        else if (height >= 576 || sec_height >= 576) {
-            barsHeight.current = 401
-        }
-        else {
-            barsHeight.current = 301
-        }
+        console.log(screenSize['height'])
 
         generateArray()
     }
@@ -87,15 +79,33 @@ function App(){
 
     useEffect(()=> {
 
-        handleResize()
-
         window.addEventListener('resize', handleResize);
     
         return () => {
           window.removeEventListener('resize', handleResize);
         }
+      }, [])
 
-      }, [window.screen.width, window.innerWidth])
+    useEffect(()=>{
+
+        const height = screenSize['height']
+
+        if (height >= 992) {
+            barsHeight.current = 601
+        }
+        else if (height >= 768) {
+            barsHeight.current = 501
+        }
+        else if (height >= 576) {
+            barsHeight.current = 401
+        }
+        else if (height >= 450) {
+            barsHeight.current = 301
+        }
+        else {
+            barsHeight.current = 201
+        }
+    }, [screenSize])
 
     useEffect(()=>{
         generateArray()
@@ -106,7 +116,7 @@ function App(){
       }, [numbArray]);
 
     return (<div>
-                <Nav arrayLength={arrayLength} setArrayLength={setArrayLength} setSortType={setSortType} breakLength={breakLength} setBreakLength={setBreakLength} working={working} />
+                <Nav arrayLength={arrayLength} setArrayLength={setArrayLength} setSortType={setSortType} breakLength={breakLength} setBreakLength={setBreakLength} working={working} handleResize={handleResize} screenSize={screenSize} />
                 <SortBtns barsRef={barsRef} generateArray={generateArray} sortType={sortType} mainSort={mainSort} working={working} setWorking={setWorking} clearHighlights={clearHighlights} stop={stop} />
                 <Display numbArray={numbArray} barsRef={barsRef} arrayLength={arrayLength} />
                 <hr/>

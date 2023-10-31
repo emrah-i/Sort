@@ -220,4 +220,10 @@ hr {
   .expanded {
     top: 0;
   }
+}
+@media (max-width: 768px) {
+  .sort-btns .btn {
+    padding: 0.4rem 0.7rem;
+    font-size: 1.15rem;
+  }
 }/*# sourceMappingURL=styles.css.map */

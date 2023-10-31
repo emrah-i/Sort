@@ -58,7 +58,7 @@ function BigO(props) {
               Therefore, even if the all elements are sorted, the algorithm must still proceed until it has inspected all elements to guarantee the array's sorted state.
             </p>
             <p><b>Best-case:</b> O(n<sup>2</sup>) –– even if the array is sorted, you have to loop through the whole array n number of times.</p>
-            <p><b>Average-case:</b> O(n<sup>2</sup>) –– since you have to loop through each index n number of times.</p>
+            <p><b>Average-case:</b> O(n<sup>2</sup>)</p>
             <p><b>Worst-case:</b> O(n<sup>2</sup>)</p>
           </div>
         );
@@ -125,7 +125,8 @@ function BigO(props) {
             </p>
             <p><b>Best-case:</b> O(n log n) –– with a good pivot selection.</p>
             <p><b>Average-case:</b> O(n log n)</p>
-            <p><b>Worst-case:</b> O(n<sup>2</sup>) –– when the pivot is always the smallest or largest element. For my algorithm, this would be when the array is sorted.</p>
+            <p><b>Worst-case:</b> O(n<sup>2</sup>) –– when the pivot is the smallest or largest element. 
+            For my algorithm, this would be when the array is sorted since the last element would be the largest.</p>
           </div>
         );
         break;
