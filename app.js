@@ -12,6 +12,7 @@ const app = express();
 const port = process.env.PORT || 8060
 
 app.use(express.static(path.join(__dirname, 'sorting', 'build')));
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'sorting', 'build', 'index.html'));
 });  
