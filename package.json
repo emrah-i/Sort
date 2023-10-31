@@ -7,8 +7,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node app.js",
+    "dev": "nodemon app.js",
     "restart": "cd sorting && npm run build && cd .. && npm run server",
-    "dev": "nodemon app.js"
+    "build": "npm install"
   },
   "keywords": [],
   "author": "",
