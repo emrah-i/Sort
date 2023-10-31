@@ -8,6 +8,8 @@ function BigO(props) {
         content = (
           <div>
             <h2>Bubble Sort:</h2>
+            <p><i className="fa-solid fa-square base-color"></i> Base Index</p>
+            <p><i className="fa-solid fa-square comp-color"></i> Comparison Index</p>
             <p>
               Bubble sort is a comparison-based sorting algorithm that works by iteratively moving the largest unsorted value to the right-most position in the array, similar to how bubbles rise to the surface in a liquid.
             </p>
@@ -36,6 +38,8 @@ function BigO(props) {
         content = (
           <div>
             <h2>Selection Sort:</h2>
+            <p><i className="fa-solid fa-square base-color"></i> Base Index</p>
+            <p><i className="fa-solid fa-square comp-color"></i> Comparison Index</p>
             <p>
               Selection sort is a comparison-based sorting algorithm that works by repeatedly selecting the smallest unsorted value and placing it in its correct position. 
             </p>
@@ -64,6 +68,8 @@ function BigO(props) {
         content = (
           <div>
             <h2>Insertion Sort:</h2>
+            <p><i className="fa-solid fa-square base-color"></i> Base Index</p>
+            <p><i className="fa-solid fa-square comp-color"></i> Comparison Index</p>
             <p>
             Insertion sort is a comparison-based sorting algorithm that builds the sorted portion of an array one element at a time. 
             </p>
@@ -94,18 +100,21 @@ function BigO(props) {
         content = (
           <div>
             <h2>Quick Sort:</h2>
+            <p><i className="fa-solid fa-square base-color"></i> Base Index</p>
+            <p><i className="fa-solid fa-square comp-color"></i> Comparison Index</p>
+            <p><i className="fa-solid fa-square swap-color"></i> Swap Index</p>
             <p>
-              Quicksort is a divide-and-conquer sorting algorithm, and there are multiple ways to implement it. 
-              My version chooses the last element as the pivot, though ideally, the pivot should be near the median for optimal performance. 
+              Quick sort is a divide-and-conquer sorting algorithm, and there are multiple ways to implement it. 
+              My version chooses the last element as the pivot, though ideally, the pivot should be near the median for optimal performance (pivot = base). 
               This explanation covers my specific approach, which incorporates recursion.
             </p>
             <p>
-              In my algorithm, the pivot is the last element. 
+              In my algorithm, the 'pivot' is the last element. 
               We also have a 'comparison' index starting from the beginning of the array. 
               It moves forward until it encounters a value greater than the pivot. 
               Upon finding such a value, another 'swap' index starts from this position and increments until it finds a value less than the pivot. 
               Once found, the values at 'comparison' and 'swap' indices are exchanged. 
-              The 'comparison' index moves one step, and the 'swap' index continues its journey from its last position. 
+              The 'comparison' index increments by 1, and the 'swap' index continues its journey from its last position. 
               This process ensures we're always comparing the 'swap' index's value against the pivot. 
               Once the 'swap' index meets the pivot, we swap the 'comparison' index value with the pivot, effectively placing the pivot in its sorted position.
             </p>
@@ -117,6 +126,37 @@ function BigO(props) {
             <p><b>Best-case:</b> O(n log n) –– with a good pivot selection.</p>
             <p><b>Average-case:</b> O(n log n)</p>
             <p><b>Worst-case:</b> O(n<sup>2</sup>) –– when the pivot is always the smallest or largest element. For my algorithm, this would be when the array is sorted.</p>
+          </div>
+        );
+        break;
+
+      case 'merge':
+        content = (
+          <div>
+            <h2>Merge Sort:</h2>
+            <p><i className="fa-solid fa-square base-color"></i> End Index</p>
+            <p><i className="fa-solid fa-square comp-color"></i> Start Index</p>
+            <p><i className="fa-solid fa-square swap-color"></i> Middle Index</p>
+            <p>
+              Merge sort is another divide-and-conquer sorting algorithm. 
+              The core principle involves recursively dividing the array into subarrays and reassembling them in sorted order.
+            </p>
+            <p>
+              We start by splitting the array in half recursivelly into subarrays until we reach the smallest unit, a single element (our base case).
+              These single-element subarrays are inherently sorted.
+              At this point, we begin merging and sorting the subarrays.
+              The sorting actually occurs while we are merging these subarrays.
+              During merging, it compares the elements of two elements and places them in the correct order.
+              Once the left and right subarrays are sorted, they are merged together.
+              This merging process continues until all the pieces come together as a fully sorted array.
+            </p>
+            <p>
+              In essence, merge sort first breaks everything down, then builds it back up in a sorted manner. 
+              Because of this structured approach, merge sort consistently works with a predictable time complexity, regardless of the initial arrangement of the input array.
+            </p>
+            <p><b>Best-case:</b> O(n log n)</p>
+            <p><b>Average-case:</b> O(n log n)</p>
+            <p><b>Worst-case:</b> O(n log n) –– merge sort maintains the same complexity irrespective of the input's nature, making it especially reliable.</p>
           </div>
         );
         break;

@@ -7,6 +7,7 @@ import bubbleSort from "./components/bubble-sort";
 import selectionSort from "./components/selection-sort";
 import insertionSort from "./components/insertion-sort";
 import quickSort from "./components/quick-sort";
+import mergeSort from "./components/merge-sort";
 import Information from "./components/information";
 
 function App(){
@@ -58,6 +59,9 @@ function App(){
                 break;
             case 'quick':
                 await quickSort(sortVariables);
+                break;
+            case 'merge':
+                await mergeSort(sortVariables);
                 break;
         }
     };

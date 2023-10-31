@@ -23,13 +23,13 @@ async function quickSort(sortVariables) {
     
         const pivotIndex = await partition(array, start, end);
     
-        await new Promise(r => setTimeout(r, (breakLength)));
+        await new Promise(r => setTimeout(r, (breakLength / 2)));
         
         const newArray_1 = prevCountRef.current;
     
         await sort(newArray_1, start, pivotIndex - 1);
     
-        await new Promise(r => setTimeout(r, (breakLength)));
+        await new Promise(r => setTimeout(r, (breakLength / 2)));
     
         const newArray_2 = prevCountRef.current;
     

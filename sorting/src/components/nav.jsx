@@ -47,6 +47,7 @@ function Nav(props) {
                     <button className="btn" data-type="selection" >Selection Sort</button>
                     <button className="btn" data-type="insertion" >Insertion Sort</button>
                     <button className="btn" data-type="quick" >Quick Sort</button>
+                    <button className="btn" data-type="merge" >Merge Sort</button>
                 </div>
                 <div className="time-slider-parent">
                     <label className="time-input-label" >Delay:</label>

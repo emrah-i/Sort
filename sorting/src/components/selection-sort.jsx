@@ -3,7 +3,6 @@ async function selectionSort(sortVariables) {
 
     const { 
         barsRef, 
-        clearHighlights, 
         prevCountRef, 
         numbArray, 
         setNumbArray, 
